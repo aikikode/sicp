@@ -15,12 +15,10 @@
   (+ (f-rec (- n 1)) (* 2 (f-rec (- n 2))) (* 3 (f-rec (- n 3))))))
 
 (define (f-iter n)
-
   (define (cc a b c count)
     (if (< count 3)
       c
       (cc b c (+ c (* 2 b) (* 3 a)) (- count 1))))
-
   (if (< n 3)
     n
     (cc 0 1 2 n)))
