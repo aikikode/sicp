@@ -22,7 +22,7 @@
 ; the fast-expt procedure. Put this all together to complete the following
 ; procedure, which runs in a logarithmic number of steps
 
-(display "Features:\n(fib n) - compute nth Fibonacci number\n\n")
+(display "Features:\n(fib n) - compute n-th Fibonacci number\n\n")
 
 (define (fib n)
   (fib-iter 1 0 0 1 n))
