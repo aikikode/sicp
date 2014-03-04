@@ -18,7 +18,11 @@
 (display "(make-point x y)\n")
 (display "(make-segment start-point end-point)\n")
 (display "(midpoint-segment segment)\n")
-(display "(print-point p)\n\n")
+(display "(print-point p)\n")
+(newline)
+(display "(make-rect segment-a segment-b)\n")
+(display "(perimeter-rect rectangle)\n")
+(display "(area-rect rectangle)\n\n")
 
 (define (print-point p)
   (newline)
@@ -49,12 +53,33 @@
 ; you design your system with suitable abstraction barriers, so that the same
 ; perimeter and area procedures will work using either representation?
 (define (make-rect segment-a segment-b) (cons segment-a segment-b))
+(define (get-rect-segment-a rectangle) (car rectangle))
+(define (get-rect-segment-b rectangle) (cdr rectangle))
+
+(define (sqrt-iter guess x)
+  (if (good-enough? guess x)
+    guess
+    (sqrt-iter (improve guess x) x)))
+(define (improve guess x)
+  (average guess (/ x guess)))
+(define (average x y)
+  (/ (+ x y) 2))
+(define (square x)
+  (* x x))
+(define (good-enough? guess x)
+  (< (abs (- (square guess) x)) (* guess 0.0000001)))
+(define (sqrt x)
+  (sqrt-iter 1 x))
 
 (define (get-segment-length segment)
- (sqr (- (x-point (start-segment segment)) (x-point (end-segment segment)))))
+ (define (square-delta point segment)
+  (square (- (point (start-segment segment)) (point (end-segment segment)))))
+ (sqrt (+ (square-delta x-point segment) (square-delta y-point segment))))
 
 (define (get-rect-width rectangle)
- ())
+ (get-segment-length (get-rect-segment-a rectangle)))
+(define (get-rect-height rectangle)
+ (get-segment-length (get-rect-segment-b rectangle)))
 
 (define (perimeter-rect rectangle)
  (* 2 (+ (get-rect-width rectangle) (get-rect-height rectangle))))
